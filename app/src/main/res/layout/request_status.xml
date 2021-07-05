@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dattim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:background="@drawable/cell_shape"
+        tools:text="Date and Time" />
+
+    <TextView
+        android:id="@+id/patname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:background="@drawable/cell_shape"
+        tools:text="Patient Name" />
+
+    <TextView
+        android:id="@+id/reqtype"
+        android:layout_width="wrap_content"
+        android:background="@drawable/cell_shape"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        tools:text="Request Type" />
+
+    <TextView
+        android:id="@+id/rstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:background="@drawable/cell_shape"
+        android:text="status" />
+</LinearLayout>
