@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class Register extends AppCompatActivity {
 
@@ -18,7 +20,7 @@ public class Register extends AppCompatActivity {
     ImageView imageView;
     Button register_btn;
     TextView login_textview;
-    UserDb myDB;
+    UserDB myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class Register extends AppCompatActivity {
         login_textview = findViewById(R.id.login_textview);
         getSupportActionBar().hide();
 
-        myDB = new UserDb(this);
+        myDB = new UserDB(this);
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +49,8 @@ public class Register extends AppCompatActivity {
                 String confirmpassword1 = confirmpassword.getText().toString();
 
                 if (name1.equals("") || email1.equals("") ||mobile1.equals("") || password1.equals("") || confirmpassword1.equals("")){
-                    Toast.makeText(Register.this, "Fill all the fields", Toast.LENGTH_SHORT).show();
+                    Toasty.info(Register.this,"Fill all the feilds",Toasty.LENGTH_LONG).show();
+
                 }
                 else {
                     if (password1.equals(confirmpassword1)){
@@ -55,20 +58,20 @@ public class Register extends AppCompatActivity {
                         if (checkuser == false){
                             Boolean result = myDB.insertuser(name1,email1,mobile1,password1);
                             if (result == true){
-                                Toast.makeText(Register.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                Toasty.success(Register.this, "Registration Successfull", Toasty.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Register.this,Login.class);
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                                Toasty.error(Register.this, "Registration failed", Toasty.LENGTH_SHORT).show();
                             }
                         }
                         else {
-                            Toast.makeText(Register.this, "User already exists", Toast.LENGTH_SHORT).show();
+                            Toasty.info(Register.this, "User already exists", Toasty.LENGTH_SHORT).show();
                         }
                     }
                     else {
-                        Toast.makeText(Register.this, "Password did not match", Toast.LENGTH_SHORT).show();
+                        Toasty.info(Register.this, "Password did not match", Toasty.LENGTH_SHORT).show();
                     }
                 }
             }

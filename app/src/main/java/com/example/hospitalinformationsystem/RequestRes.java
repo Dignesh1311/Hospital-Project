@@ -1,5 +1,6 @@
 package com.example.hospitalinformationsystem;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ public class RequestRes extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase myDB) {
-        myDB.execSQL("create Table Requests(date Text ,name  Text primary key,reqtype Text,status Text)");
+        myDB.execSQL("create Table Requests(id INTEGER PRIMARY KEY AUTOINCREMENT,date Text ,name  Text,reqtype Text,status Text,Hname Text)");
     }
 
     @Override
@@ -28,12 +29,35 @@ public class RequestRes extends SQLiteOpenHelper {
     {
         SQLiteDatabase db=getWritableDatabase();
         String[] reqid=new String[1];
-        reqid[0]=req.getPname();
+        reqid[0]= String.valueOf(req.getId());
 
-        return db.delete("Requests","name=?",reqid)!=0;
+        return db.delete("Requests","id=?",reqid)!=0;
     }
 
-    public boolean insertReq(String date, String name,String type,String status)
+    public boolean acceptstat(Request req){
+
+        String[] reqid=new String[1];
+        reqid[0]= String.valueOf(req.getId());
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+        newValues.put("status", "Accepted");
+        return myDB.update("Requests",newValues,"id=?",reqid)!=0;
+    }
+
+
+    public boolean rejectstat(Request req){
+
+
+        String[] reqid=new String[1];
+        reqid[0]= String.valueOf(req.getId());
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+        newValues.put("status", "Rejected");
+        return myDB.update("Requests",newValues,"id=?",reqid)!=0;
+
+    }
+
+    public boolean insertReq(String date, String name,String type,String status,String hname)
     {
 
         SQLiteDatabase myDB = this.getWritableDatabase();
@@ -42,6 +66,8 @@ public class RequestRes extends SQLiteOpenHelper {
         contentValues.put("name" ,name );
         contentValues.put("reqtype" ,type);
         contentValues.put("status" ,status);
+        contentValues.put("Hname",hname);
+
 
         long result = myDB.insert("Requests",null,contentValues);
         if (result==-1){
@@ -52,6 +78,7 @@ public class RequestRes extends SQLiteOpenHelper {
         }
     }
 
+    @SuppressLint("Range")
     Request[] selectdataprofile(){
         SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
         Cursor result=sqLiteDatabase.rawQuery("select * from Requests",null);
@@ -59,18 +86,19 @@ public class RequestRes extends SQLiteOpenHelper {
         if(result.getCount()==0)
         {return null;}
         else
-            {
+        {
             Request[] userlist = new Request[result.getCount()];
             int ctr=0;
             result.moveToFirst();
             while(!result.isAfterLast())
             {
                 Request req=new Request();
+                req.setId(result.getInt(result.getColumnIndex("id")));
                 req.setDate(result.getString(result.getColumnIndex("date")));
                 req.setPname(result.getString(result.getColumnIndex("name")));
                 req.setReqtype(result.getString(result.getColumnIndex("reqtype")));
                 req.setStatus(result.getString(result.getColumnIndex("status")));
-
+                req.setHname(result.getString(result.getColumnIndex("Hname")));
                 userlist[ctr++]=req;
 
                 result.moveToNext();

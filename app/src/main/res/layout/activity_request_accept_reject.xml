@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg1"
     android:orientation="vertical"
-    android:background="@drawable/bg2"
-    tools:context=".Request_Result">
-
+    tools:context=".requestAcceptReject">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reqview"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/request_status"
+        tools:listitem="@layout/adminreq"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
+
 
 </LinearLayout>

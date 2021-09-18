@@ -8,15 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import es.dmoral.toasty.Toasty;
 
 public class Case_Transfer extends AppCompatActivity {
     String tohos;
     TextView tohosp;
     EditText patname;
     Button transfer;
+    RequestRes mydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +29,28 @@ public class Case_Transfer extends AppCompatActivity {
         tohos=extradata.getStringExtra("Hospital Name");
         tohosp=findViewById(R.id.tohos);
         tohosp.setText(tohos);
+        mydb=new RequestRes(this);
         patname=findViewById(R.id.pname);
         transfer=findViewById(R.id.case_btn);
         transfer.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String currentDateandTime = sdf.format(new Date());
-                Intent intent=new Intent(Case_Transfer.this,Request_Result.class);
-                intent.putExtra("date",currentDateandTime);
-                intent.putExtra("pname",patname.getText().toString());
-                intent.putExtra("reqtype","Case Transfer");
-                intent.putExtra("status","Pending");
-                startActivity(intent);
+
+
+                Boolean Result=mydb.insertReq(currentDateandTime,patname.getText().toString(),"Case Transfer","Pending",tohos);
+                if (Result == true){
+                    Toasty.success(Case_Transfer.this, "Request Added Successful", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Toasty.error(Case_Transfer.this, "Registration failed", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
         });
     }

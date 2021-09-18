@@ -3,10 +3,12 @@ package com.example.hospitalinformationsystem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class Hospital_Info extends AppCompatActivity {
-
+    AdminDB db;
     RecyclerView hosinfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,11 +17,16 @@ public class Hospital_Info extends AppCompatActivity {
 
         hosinfo=findViewById(R.id.hoslist);
 
-        Hospital[] hos=new Hospital[2];
+        Intent extradata=getIntent();
+        String area=extradata.getStringExtra("area");
+        TextView select_area=findViewById(R.id.selectarea);
+        select_area.append(area);
 
-        hos[0]=new Hospital(R.drawable.shalby,"Shelby Hospital","Naroda","10","2000 L","5");
-        hos[1]=new Hospital(R.drawable.apollo,"Apollo Hospital","Sabarmati","8","3000 L","5");
 
+
+        db=new AdminDB(Hospital_Info.this);
+
+        Hospital[] hos=db.selecthosp(area);
         HospAdapter hospada=new HospAdapter();
 
         hospada.setItems(hos);

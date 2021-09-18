@@ -3,36 +3,47 @@ package com.example.hospitalinformationsystem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import es.dmoral.toasty.Toasty;
+
 
 public class Request_Result extends AppCompatActivity {
-    String date,name,type,status;
-    RecyclerView reqview;
 
+    RecyclerView req_list;
+    RequestRes mydb;
+    Request[] record;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_result);
 
 
-        Intent intent=getIntent();
-        date=intent.getStringExtra("date");
-        name=intent.getStringExtra("pname");
-        type=intent.getStringExtra("reqtype");
-        status=intent.getStringExtra("status");
+        mydb=new RequestRes(this);
 
+        record=mydb.selectdataprofile();
 
-        Request req=new Request(date,name,type,status);
+        if(record == null) {
+            Toasty.info(Request_Result.this, "No record Found", Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+                for(Request req:record)
+                {
+                    Log.d("date",req.getDate());
+                    Log.d("name",req.getPname());
+                    Log.d("reqtype",req.getReqtype());
+                    Log.d("status",req.getStatus());
 
-        reqview=findViewById(R.id.reqview);
-        Request_Adapter reqAda =new Request_Adapter();
-        reqAda.setItems(req);
-        reqview.setAdapter(reqAda);
+                }
 
+                Request_Adapter rvadapter = new Request_Adapter();
+                rvadapter.setItems(record);
+                req_list = findViewById(R.id.reqview);
+                Log.d("Length", String.valueOf(rvadapter.getItemCount()));
+                req_list.setAdapter(rvadapter);
+            }
     }
 }

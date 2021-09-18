@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HospitalInformationSystem">
-        <activity android:name=".Request_Result"></activity>
+        <activity android:name=".AreaSelect"></activity>
+        <activity android:name=".requestAcceptReject" />
+        <activity android:name=".feedback_display" />
+        <activity android:name=".admin_hospital_form" />
+        <activity android:name=".Request_Result" />
         <activity android:name=".Case_Transfer" />
         <activity android:name=".BedRequest" />
         <activity android:name=".Hospital_Info" />
@@ -19,6 +23,10 @@
         <activity android:name=".Home" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
+        <activity android:name=".admin_home" />
+        <activity android:name=".admin_SignUp" />
+        <activity android:name=".admin_Login" />
+        <activity android:name=".StartActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

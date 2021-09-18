@@ -3,7 +3,9 @@ package com.example.hospitalinformationsystem;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +31,16 @@ public class HospAdapter extends RecyclerView.Adapter<HospAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.hname.setText(hos[position].getHospName());
-        holder.hadress.setText(hos[position].getAddress());
-        holder.nobed.setText(hos[position].getAmtbed());
-        holder.amtoxy.setText(hos[position].getAmtoxy());
-        holder.amtamb.setText(hos[position].getAmtamb());
+        holder.hadress.setText(hos[position].getArea());
+        holder.nobed.setText(String.valueOf(hos[position].getAmtbed()));
+        holder.amtoxy.setText(String.valueOf(hos[position].getAmtoxy())+" L");
+        holder.amtamb.setText(String.valueOf(hos[position].getAmtamb()));
+        holder.amtdoc.setText(String.valueOf(hos[position].getDoc()));
+        holder.amtnur.setText(String.valueOf(hos[position].getNur()));
         holder.logo.setImageResource(hos[position].getLogo());
-    }
+
+
+        }
 
     @Override
     public int getItemCount() {
@@ -52,6 +58,8 @@ public class HospAdapter extends RecyclerView.Adapter<HospAdapter.ViewHolder> {
         private final TextView nobed;
         private final TextView amtoxy;
         private final TextView amtamb;
+        private final TextView amtdoc;
+        private final TextView amtnur;
         private final ImageView logo;
         private final Button breq;
         private final Button ctran;
@@ -65,10 +73,14 @@ public class HospAdapter extends RecyclerView.Adapter<HospAdapter.ViewHolder> {
             logo=itemView.findViewById(R.id.logo);
             breq=itemView.findViewById(R.id.breq);
             ctran=itemView.findViewById(R.id.ctran);
+            amtdoc=itemView.findViewById(R.id.damt);
+            amtnur=itemView.findViewById(R.id.namt);
+
             breq.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context,BedRequest.class);
+                    intent.putExtra("Hospital Name",hname.getText().toString());
                     context.startActivity(intent);
 
                 }

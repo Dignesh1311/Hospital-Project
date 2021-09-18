@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,14 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import es.dmoral.toasty.Toasty;
 
 
-public class Request_Adapter extends RecyclerView.Adapter<Request_Adapter.ViewHolder> {
+public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdapter.ViewHolder> {
     private Request[] req;
-    Context context;
+    static Context context;
+    RequestRes mydb;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context=parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_status, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adminreq, parent, false);
         return new ViewHolder(view);
     }
 
@@ -33,20 +35,39 @@ public class Request_Adapter extends RecyclerView.Adapter<Request_Adapter.ViewHo
         holder.req.setText(req[position].getReqtype());
         holder.status.setText(req[position].getStatus());
         holder.hname.setText(req[position].getHname());
-        holder.cancel.setOnClickListener(v -> {
-            RequestRes mydb=new RequestRes(context);
-            if(mydb.cancelreq(req[position])){
-                Toasty.success(context, "Request Cancelled", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(context,Home_Adapter.class);
-                context.startActivity(intent);
-            }
-            else
-            {
-                Toasty.error(context,"Request Cancelling Failed",Toast.LENGTH_SHORT).show();
-            }
+        holder.accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydb=new RequestRes(context);
+                boolean result=mydb.acceptstat(req[position]);
 
+                if(result)
+                {
+                    Toasty.success(context,"Accepted",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(context,admin_home.class);
+                    context.startActivity(intent);
+                }
+                else
+                {Toasty.error(context,"failed",Toast.LENGTH_SHORT).show();}
+            }
         });
 
+        holder.reject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mydb=new RequestRes(context);
+                boolean result=mydb.rejectstat(req[position]);
+
+                if(result)
+                {Toasty.success(context,"Rejected",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(context,admin_home.class);
+                    context.startActivity(intent);
+                }
+                else
+                {Toasty.error(context,"failed",Toast.LENGTH_SHORT).show();}
+
+            }
+        });
     }
 
     @Override
@@ -56,6 +77,7 @@ public class Request_Adapter extends RecyclerView.Adapter<Request_Adapter.ViewHo
 
     public void setItems(Request[] req) {
         this.req = req;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,7 +85,8 @@ public class Request_Adapter extends RecyclerView.Adapter<Request_Adapter.ViewHo
         private final TextView pname;
         private final TextView req;
         private final TextView status;
-        private final ImageView cancel;
+        private final Button accept;
+        private final Button reject;
         private final TextView hname;
 
         public ViewHolder(@NonNull View itemView) {
@@ -73,7 +96,8 @@ public class Request_Adapter extends RecyclerView.Adapter<Request_Adapter.ViewHo
             pname = itemView.findViewById(R.id.patname);
             req = itemView.findViewById(R.id.reqtype);
             status = itemView.findViewById(R.id.rstatus);
-            cancel=itemView.findViewById(R.id.cancelreq);
+            accept=itemView.findViewById(R.id.accept);
+            reject=itemView.findViewById(R.id.reject);
             hname=itemView.findViewById(R.id.hospname2);
         }
     }

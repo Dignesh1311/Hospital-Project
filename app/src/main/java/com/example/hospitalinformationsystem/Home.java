@@ -11,11 +11,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,11 +34,14 @@ public class Home extends AppCompatActivity {
     int [] image={R.drawable.profile,R.drawable.hospital,R.drawable.beds,R.drawable.contactus,R.drawable.feedback};
     GridView gridView;
 
+    UserDB myDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        myDB = new UserDB(Home.this);
 
         navigationView = findViewById(R.id.navigationview_home);
         drawerLayout = findViewById(R.id.drawer_home);
@@ -46,6 +53,19 @@ public class Home extends AppCompatActivity {
         gridView=findViewById(R.id.home_grid);
         Home_Adapter aabbAdapter=new Home_Adapter(Home.this,name,image);
         gridView.setAdapter(aabbAdapter);
+
+        View headerViewiew =  navigationView.inflateHeaderView(R.layout.header);
+        TextView tvname = headerViewiew.findViewById(R.id.dashboard_name);
+        TextView tvemail = headerViewiew.findViewById(R.id.dashboard_email);
+
+        Cursor cursor = myDB.selectEmailIdName();
+        if (cursor.moveToFirst() ) {
+            tvname.setText(cursor.getString(0));
+            tvemail.setText(cursor.getString(1));
+        } else {
+            tvemail.setText("Ooops no data extracted");
+        }
+        cursor.close();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="textHintColor">#352C2C</color>
-    <color name="colorBackground">#413e4f</color>
+    <color name="appTextColor">#0a3175</color>
 </resources>

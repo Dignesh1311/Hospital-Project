@@ -3,18 +3,27 @@ package com.example.hospitalinformationsystem;
 public class Hospital {
     int logo;
     String HospName;
+    String Area;
     String Address;
-    String amtbed;
-    String amtoxy;
-    String amtamb;
+    int amtbed;
+    int amtoxy;
+    int amtamb;
+    int doc;
+    int nur;
 
-    public Hospital(int logo, String hospName, String address, String amtbed, String amtoxy, String amtamb) {
+    public Hospital() {
+    }
+
+    public Hospital(int logo, String hospName, String area, String address, int amtbed, int amtoxy, int amtamb, int doc, int nur) {
         this.logo = logo;
         HospName = hospName;
+        Area = area;
         Address = address;
         this.amtbed = amtbed;
         this.amtoxy = amtoxy;
         this.amtamb = amtamb;
+        this.doc = doc;
+        this.nur = nur;
     }
 
     public int getLogo() {
@@ -33,6 +42,14 @@ public class Hospital {
         HospName = hospName;
     }
 
+    public String getArea() {
+        return Area;
+    }
+
+    public void setArea(String area) {
+        Area = area;
+    }
+
     public String getAddress() {
         return Address;
     }
@@ -41,28 +58,44 @@ public class Hospital {
         Address = address;
     }
 
-    public String getAmtbed() {
+    public int getAmtbed() {
         return amtbed;
     }
 
-    public void setAmtbed(String amtbed) {
+    public void setAmtbed(int amtbed) {
         this.amtbed = amtbed;
     }
 
-    public String getAmtoxy() {
+    public int getAmtoxy() {
         return amtoxy;
     }
 
-    public void setAmtoxy(String amtoxy) {
+    public void setAmtoxy(int amtoxy) {
         this.amtoxy = amtoxy;
     }
 
-    public String getAmtamb() {
+    public int getAmtamb() {
         return amtamb;
     }
 
-    public void setAmtamb(String amtamb) {
+    public void setAmtamb(int amtamb) {
         this.amtamb = amtamb;
+    }
+
+    public int getDoc() {
+        return doc;
+    }
+
+    public void setDoc(int doc) {
+        this.doc = doc;
+    }
+
+    public int getNur() {
+        return nur;
+    }
+
+    public void setNur(int nur) {
+        this.nur = nur;
     }
 }
 

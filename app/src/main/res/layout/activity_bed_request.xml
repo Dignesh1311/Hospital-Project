@@ -56,10 +56,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_location">
-            <RadioButton
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:layout_marginEnd="20dp"
                 android:text="At Home" />
             <RadioButton
                 android:layout_width="match_parent"
@@ -67,6 +73,7 @@
                 android:textColor="@color/black"
                 android:text="In Ambulance"
                 />
+            </LinearLayout>
         </RadioGroup>
 
         <TextView
@@ -76,22 +83,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Whether Covid Positive or Not ? " />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <CheckBox
-                android:layout_width="wrap_content"
+        <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Yes" />
-            <CheckBox
-                android:layout_width="wrap_content"
+                android:id="@+id/covid">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="No"
-                android:layout_marginStart="20dp" />
-        </LinearLayout>
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="COVID Positive"
+                    android:layout_marginEnd="20dp"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="COVID Negative"
+                    />
+            </LinearLayout>
+            </RadioGroup>
+
 
         <EditText
             android:id="@+id/other"
@@ -125,23 +140,30 @@
             android:text="Whether Oxygen Required or Not ? " />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <CheckBox
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Yes" />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No"
-                android:textColor="@color/black"
-                android:layout_marginStart="20dp"
-                />
-        </LinearLayout>
+                android:id="@+id/oxygen">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Yes"
+                    android:layout_marginEnd="20dp"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="No"
+                    />
+                </LinearLayout>
+            </RadioGroup>
 
         <EditText
             android:id="@+id/mobile"
@@ -164,6 +186,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:padding="9dp"
+            android:background="@drawable/button"
             android:text="REQUEST" />
 
 
